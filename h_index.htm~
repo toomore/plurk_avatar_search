@@ -1,0 +1,37 @@
+<html>
+        <head>
+                <meta http-equiv="Content-Type" content="application/xhtml+xml; charset=UTF-8" />
+                <title>Plurk Avatar History 噗浪頭像歷史查詢</title>
+                <meta name="description" content="Search friends or fans avatar 搜尋好友與粉絲的頭像">
+        </head>
+        <body>
+                <table width="100%" heigh="100%">
+                        <tr>
+                                <td align="center" valign="middle">
+                                        <div>
+                                                <form action="/user" method="get">
+                                                        <div><input name="u" value="{{ tv.nickname }}"> <input type="submit" value="Plurk Picture!">
+                                                                <div>
+                                                                        <a href="http://appengine.google.com/"><img border="0" src="http://code.google.com/appengine/images/appengine-silver-120x30.gif" alt="Powered by Google App Engine" /></a>script type="text/javascript" src="http://widgets.amung.us/classic.js"></script><script type="text/javascript">WAU_classic('9cjt4glh0ecz')</script>
+                                                                        <br><font size="2" color="998899">Plurk Avatar History 1.7-pre
+                                                                        <br>噗浪頭像歷史查詢 By <a href="http://www.plurk.com/toomore">Toomore</a></font>
+                                                                </div>
+                                                        </div>
+                                                </form>
+                                        </div>
+                                </td>
+                        </tr>
+                </table>
+        </body>
+        <script type="text/javascript">
+                var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+                document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+        </script>
+        <script type="text/javascript">
+                try {
+                var pageTracker = _gat._getTracker("UA-80185-24");
+                pageTracker._trackPageview();
+                } catch(err) {}
+        </script>
+</html>
+

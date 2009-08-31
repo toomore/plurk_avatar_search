@@ -1,0 +1,8 @@
+application: toomorechiang
+version: 1-7
+runtime: python
+api_version: 1
+
+handlers:
+- url: .*
+  script: WSGI.py

@@ -1,0 +1,46 @@
+{% extends "h_display.htm" %}
+
+{% block titlename %}{{ tv.titlename }}{% endblock %}
+
+{% block content %}
+        <h1>{{ tv.nickname }}</h1>
+        ID:{{tv.uid}} , Karma: {{ tv.karma }} ({{tv.karmach}})<br>
+         Friends: {{ tv.friends }} Fans: {{tv.fans}} {% if tv.location %}, <i>{{ tv.location }}</i> {{ tv.maps }} {% endif %}<br>
+        {{ tv.google }}
+        <ul>{% for i in tv.user_rss %}<li>{{ i.title }} <a href="{{ i.link }}" target="_blank">View</a></li>{% endfor%}</ul>
+        {% for i in tv.getplurkpic %}<img src="http://avatars.plurk.com/{{ tv.uid }}-big{{ i }}.jpg">{% endfor %}
+{% endblock %}
+
+{% block friends %}
+        <div width="100%">
+        {% for gfs in gf %}
+                <div class="sdiv">
+                        <b>{{ gfs.nickname }}</b><br>
+                        Karma: {{ gfs.karma }}{# <i>{{ gfs.location }}</i> #}<br>
+                        <a href="/user?u={{ gfs.nickname }}"><img border="0" src="http://avatars.plurk.com/{{ gfs.uid }}-big{{ gfs.avatar }}.jpg"></a><br>
+                        <div align="right">{{ gfs.powerbar }}</div>
+                </div>
+        {% endfor %}
+        </div>
+{% endblock %}
+
+{% block fans %}
+        <div width="100%">
+        {% for gfans in gfan %}
+                <div class="sdiv">
+                        <b>{{ gfans.nickname }}</b><br>
+                        Karma: {{ gfans.karma }}{# <i>{{ gfans.location }}</i> #}<br>
+                        <a href="/user?u={{ gfans.nickname }}"><img border="0" src="http://avatars.plurk.com/{{ gfans.uid }}-big{{ gfans.avatar }}.jpg"></a><br>
+                        <div align="right">{{ gfans.powerbar }}</div>
+                </div>
+        {% endfor %}
+        </div>
+{% endblock %}
+
+{% block foot %}
+<div align="right">
+        <a href="http://appengine.google.com/"><img border="0" src="http://code.google.com/appengine/images/appengine-silver-120x30.gif" alt="Powered by Google App Engine" /></a>script type="text/javascript" src="http://widgets.amung.us/classic.js"></script><script type="text/javascript">WAU_classic('9cjt4glh0ecz')</script>
+        <br><font size="2" color="998899">Plurk Avatar History 1.7-pre
+        <br>噗浪頭像歷史查詢 By <a href="http://www.plurk.com/toomore">Toomore</a></font>
+</div>
+{% endblock %}
