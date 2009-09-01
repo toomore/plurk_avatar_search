@@ -69,7 +69,7 @@ class qq(webapp.RequestHandler):
                                 gfan.append(gfanx)
                         self.response.out.write(template.render( 'hh_firstpage.htm' , {'tv' : tv, 'gf' : gf,'gfan' : gfan}) )
                 except:
-                        self.response.out.write("Please type Plurk ID...")
+                        self.response.out.write("Please type Plurk ID...OR Go bace to index")
                 
 class fls(webapp.RequestHandler):
         def get(self):
