@@ -14,11 +14,10 @@ class index(webapp.RequestHandler):
 class qq(webapp.RequestHandler):
        def get(self):
                 try:
-                        #self.response.out.write(input_uname(self.request.get('u')))
                         pgg =  plurkapi_g.getplurkpic(self.request.get('u'))
                         import feedparser
                         user_rss = feedparser.parse(('http://www.plurk.com/%s.xml') % pgg.nickname)
-
+                        
                         tv = {
                                 'nickname' : pgg.nickname,
                                 'uid' : pgg.user_id,
@@ -69,46 +68,9 @@ class qq(webapp.RequestHandler):
                                         }
                                 gfan.append(gfanx)
                         self.response.out.write(template.render( 'hh_firstpage.htm' , {'tv' : tv, 'gf' : gf,'gfan' : gfan}) )
-                        '''                        
-                        self.response.out.write(friend_list_top)
-                        self.response.out.write("Search tools: ")
-                        self.response.out.write(add_google(self.request.get('u')))
-                        self.response.out.write(pgg.getplurkpic())
-                        self.response.out.write("<br>")
-                        self.response.out.write("<br><b>" + "="* 12 + self.request.get('u') + "'s Friends" + "=" * 12+ "</b><br>")                        
-                        '''
-                        '''
-                        friend_json = pgg.getfriend()
-                        for gfname in friend_json.keys():
-                                friend_list_top = (">> See %s's Friends <br>Karma:%s<br>Location:%s %s<br>") % (plurkurlname(friend_json[gfname]['nick_name'])['gomore'],friend_json[gfname]['karma'],friend_json[gfname].get('location','None'),add_maps(friend_json[gfname].get('location','None'),friend_json[gfname]['nick_name']))
-                                self.response.out.write(friend_list_top)
-                                self.response.out.write("Search tools: ")
-                                self.response.out.write(add_google(friend_json[gfname]['nick_name']))
-                                self.response.out.write("<br>")
-                                if friend_json[gfname]['avatar'] is None:
-                                        friend_json[gfname]['avatar'] = ''
-                                friend_list = ('<img alt="" src="http://avatars.plurk.com/%s-big%s.jpg">') % (friend_json[gfname]['uid'] , friend_json[gfname]['avatar'])
-                                self.response.out.write(friend_list)
-                                self.response.out.write((" ...... Or %s %s<br><br>") % (plurkurlname(friend_json[gfname]['nick_name'])['goplurk'],morepics(friend_json[gfname]['avatar'])))
-
-                        self.response.out.write("<br><b>" + "="* 12 + self.request.get('u') + "'s Fans" + "=" * 12 + "</b><br>")                        
-                        fans_json = pgg.getfans()
-                        for gfanname in fans_json.keys():
-                                fans_list_top = (">> See %s's Friends <br>Karma:%s<br>Location:%s %s<br>") % (plurkurlname(fans_json[gfanname]['nick_name'])['gomore'],fans_json[gfanname]['karma'],fans_json[gfanname].get('location','None'),add_maps(fans_json[gfanname].get('location','None'),fans_json[gfanname]['nick_name']))
-                                self.response.out.write(fans_list_top)
-                                self.response.out.write("Search tools: ")
-                                self.response.out.write(add_google(fans_json[gfanname]['nick_name']))
-                                self.response.out.write("<br>")
-                                if fans_json[gfanname]['avatar'] is None:
-                                        fans_json[gfanname]['avatar'] = ''
-                                fans_list = ('<img alt="" src="http://avatars.plurk.com/%s-big%s.jpg">') % (fans_json[gfanname]['uid'] , fans_json[gfanname]['avatar'])
-                                self.response.out.write(fans_list)
-                                self.response.out.write((" ...... Or %s %s<br><br>") % (plurkurlname(fans_json[gfanname]['nick_name'])['goplurk'],morepics(fans_json[gfanname]['avatar'])))
-                        '''
                 except:
                         self.response.out.write("Please type Plurk ID...")
-                self.response.out.write(footnote())
-
+                
 class fls(webapp.RequestHandler):
         def get(self):
                 if memcache.flush_all():
@@ -213,11 +175,6 @@ def headernote(name = None):
                 name = ("[%s] - " % name )
         return name
 
-def footnote():
-        return"""
-        </body>
-        </html>
-        """
 
 application = webapp.WSGIApplication([('/user', qq),
                                                                 ('/',index),
