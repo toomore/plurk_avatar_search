@@ -81,13 +81,15 @@ class ddaa(webapp.RequestHandler):
         def get(self):
                 import plurkdata
                 ddaa = plurkdata.plurkindata2
-                result = ddaa.gql("order by p_date desc")
+                result = ddaa.gql("order by p_upicnum desc")
+                gdata = []
                 for ad in result:
-                        if ad.key() is None:
-                                print "@@@"
-                                print "No Result!"
-                        else:
-                                self.response.out.write(("%s -- %s - %s - %s - %s<br>") % (ad.key(),ad.p_uname,ad.p_uid,ad.p_upicnum,ad.p_date ))
+                        gdatax = {
+                                        'uname' : ad.p_uname,
+                                        'uid' : ad.p_uid
+                                        }
+                        gdata.append(gdatax)
+                self.response.out.write(template.render( 'hh_datapage.htm' , {'gdata' : gdata}) )
                         #ad.delete()
 class exif(webapp.RequestHandler):
         def get(self):
