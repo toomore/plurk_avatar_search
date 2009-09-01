@@ -1,5 +1,5 @@
 indexes:
-- kind: plurkindata
+- kind: plurkindata2
   properties:
   - name: p_uname
   - name: p_upicnum
