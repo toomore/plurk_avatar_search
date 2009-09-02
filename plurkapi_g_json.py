@@ -31,6 +31,7 @@ class getplurkpic:
                 test_json = simplejson.JSONDecoder().decode(matches[0])
                 # http://avatars.plurk.com/703365-big4.jpg
                 #u_pic = re.compile('http://avatars\.plurk\.com/.*-big([\d]+)\.jpg')
+                self.nickname = test_json['page_user']['nick_name']
                 self.picsnum = test_json['page_user']['avatar']
                 self.user_id = test_json['page_user']['uid']
                 self.karma = test_json['page_user']['karma']
