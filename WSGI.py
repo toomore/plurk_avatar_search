@@ -81,12 +81,13 @@ class ddaa(webapp.RequestHandler):
         def get(self):
                 import plurkdata
                 ddaa = plurkdata.plurkindata2
-                result = ddaa.gql("order by p_upicnum desc")
+                result = ddaa.gql("where p_upicnum > 100 order by p_upicnum desc")
                 gdata = []
                 for ad in result:
                         gdatax = {
                                         'uname' : ad.p_uname,
-                                        'uid' : ad.p_uid
+                                        'uid' : ad.p_uid,
+                                        'upic' : ad.p_upicnum
                                         }
                         gdata.append(gdatax)
                 self.response.out.write(template.render( 'hh_datapage.htm' , {'gdata' : gdata}) )
