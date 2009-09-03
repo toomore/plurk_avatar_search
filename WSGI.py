@@ -5,6 +5,7 @@ from google.appengine.api import memcache
 from google.appengine.ext.webapp import template
 from google.appengine.ext.webapp.util import run_wsgi_app
 import plurkapi_g_json as plurkapi_g
+import plurkdata
 
 class index(webapp.RequestHandler):
         def get(self):
@@ -80,36 +81,46 @@ class fls(webapp.RequestHandler):
 
 class girls(webapp.RequestHandler):
         def get(self):
-                import plurkdata
-                ddaa = plurkdata.plurkindata2
-                result = ddaa.gql("where p_gender = 0 and p_upicnum > 50 order by p_upicnum desc")
-                gdata = []
-                for ad in result:
-                        gdatax = {
-                                        'uname' : ad.p_uname,
-                                        'uid' : ad.p_uid,
-                                        'upic' : ad.p_upicnum
-                                        }
-                        gdata.append(gdatax)
+                value = memcache.get("girls")
+                seconds = 300
+                if value is None:
+                        ddaa = plurkdata.plurkindata2
+                        result = ddaa.gql("where p_gender = 0 and p_upicnum > 50 order by p_upicnum desc")
+                        gdata = []
+                        for ad in result:
+                                gdatax = {
+                                                'uname' : ad.p_uname,
+                                                'uid' : ad.p_uid,
+                                                'upic' : ad.p_upicnum
+                                                }
+                                gdata.append(gdatax)
+                        memcache.add("girls", gdata, seconds)
+                else:
+                        gdata = value
                 bgurl = """正妹 Girls <a href="/boys">猛男 Boys</a> | <a href="/">首頁 Home</a>"""
-                tv = {'titlename' : '正妹牆', 'css' : 'girls','bgurl' : bgurl}
+                tv = {'titlename' : '正妹牆', 'css' : 'girls','bgurl' : bgurl,'seconds' : seconds}
                 self.response.out.write(template.render( 'hh_bgpage.htm' , {'gdata' : gdata, 'tv' : tv}) )
 
 class boys(webapp.RequestHandler):
         def get(self):
-                import plurkdata
-                ddaa = plurkdata.plurkindata2
-                result = ddaa.gql("where p_gender = 1 and p_upicnum > 50 order by p_upicnum desc")
-                gdata = []
-                for ad in result:
-                        gdatax = {
-                                        'uname' : ad.p_uname,
-                                        'uid' : ad.p_uid,
-                                        'upic' : ad.p_upicnum
-                                        }
-                        gdata.append(gdatax)
+                value = memcache.get("boys")
+                seconds = 300
+                if value is None:
+                        ddaa = plurkdata.plurkindata2
+                        result = ddaa.gql("where p_gender = 1 and p_upicnum > 50 order by p_upicnum desc")
+                        gdata = []
+                        for ad in result:
+                                gdatax = {
+                                                'uname' : ad.p_uname,
+                                                'uid' : ad.p_uid,
+                                                'upic' : ad.p_upicnum
+                                                }
+                                gdata.append(gdatax)
+                        memcache.add("boys", gdata, seconds)
+                else:
+                        gdata = value
                 bgurl = """<a href="/girls">正妹 Girls</a> 猛男 Boys | <a href="/">首頁 Home</a>"""
-                tv = {'titlename' : '猛男牆', 'css' : 'boys','bgurl' : bgurl}
+                tv = {'titlename' : '猛男牆', 'css' : 'boys','bgurl' : bgurl,'seconds' : seconds}
                 self.response.out.write(template.render( 'hh_bgpage.htm' , {'gdata' : gdata, 'tv' : tv}) )
 
 class exif(webapp.RequestHandler):

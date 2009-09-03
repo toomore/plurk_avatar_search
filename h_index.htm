@@ -10,15 +10,10 @@
                                 <td align="center" valign="middle">
                                         <div>
                                                 <form action="/user" method="get">
-                                                        <div><input name="u" value="{{ tv.nickname }}"> <input type="submit" value="Plurk Picture!">
-                                                                <div>
-                                                                        <a href="http://appengine.google.com/"><img border="0" src="http://code.google.com/appengine/images/appengine-silver-120x30.gif" alt="Powered by Google App Engine" /></a>script type="text/javascript" src="http://widgets.amung.us/classic.js"></script><script type="text/javascript">WAU_classic('9cjt4glh0ecz')</script>
-                                                                        <br><font size="2" color="998899">Plurk Avatar History 1.7.5
-                                                                        <br>噗浪頭像歷史查詢 By <a href="http://www.plurk.com/toomore">Toomore</a></font>
-                                                                </div>
-                                                        </div>
+                                                        <input name="u" value="{{ tv.nickname }}"> <input type="submit" value="Plurk Picture">
                                                 </form>
                                         </div>
+                                        {% include "h_toomore_desc.htm" %}
                                 </td>
                         </tr>
                 </table>

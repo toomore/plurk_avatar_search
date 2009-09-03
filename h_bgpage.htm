@@ -24,6 +24,12 @@
                         float: left;
                         margin: 1px;
                         padding: 1px;}
+                .descr {
+                        float: right;
+                        margin: 1px;
+                        padding: 1px;
+                        font-size:10pt;
+                        color:#778899;}
                 .top {
                         border-top:1px #C9D7F1 solid;
                         height:6px;}
@@ -34,6 +40,9 @@
                 <div class="cc">
                         <div class="desc">
                                 Wall Mode: {% block wall %}{% endblock %}
+                        </div>
+                        <div class="descr">
+                                Every {{ tv.seconds }} seconds update.
                         </div>
                 </div>
                 <div class="cc top"></div>
