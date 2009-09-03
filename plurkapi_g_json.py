@@ -13,6 +13,7 @@ class getplurkpic:
                 self.karmach = 0
                 self.location = "TW"
                 self.picsnum = '0'
+                self.gender = 0
                 self.friends = 0
                 self.fans = 0
                 self.page = "qw"
@@ -32,6 +33,7 @@ class getplurkpic:
                 # http://avatars.plurk.com/703365-big4.jpg
                 #u_pic = re.compile('http://avatars\.plurk\.com/.*-big([\d]+)\.jpg')
                 self.picsnum = test_json['page_user']['avatar']
+                self.gender = test_json['page_user']['gender']
                 self.user_id = test_json['page_user']['uid']
                 self.karma = test_json['page_user']['karma']
                 self.karmach = test_json['page_user']['karma_change']
@@ -60,7 +62,9 @@ class getplurkpic:
                         indata = plurkdata.plurkindata2(key_name = self.nickname,
                                 p_uname = self.nickname,
                                 p_uid = int(self.user_id),
-                                p_upicnum = int(self.picsnum))
+                                p_upicnum = int(self.picsnum),
+                                p_gender = int(self.gender)
+                                )
                         indata.put()
                         return self.printpic(self.picsnum , self.size)
         
