@@ -81,7 +81,7 @@ class ddaa(webapp.RequestHandler):
         def get(self):
                 import plurkdata
                 ddaa = plurkdata.plurkindata2
-                result = ddaa.gql("where p_upicnum > 100 order by p_upicnum desc")
+                result = ddaa.gql("where p_gender = 0 order by p_upicnum desc")
                 gdata = []
                 for ad in result:
                         gdatax = {

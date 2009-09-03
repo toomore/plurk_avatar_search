@@ -1,7 +1,7 @@
 indexes:
 - kind: plurkindata2
   properties:
-  - name: p_uname
+  - name: p_gender
   - name: p_upicnum
     direction: desc
 
