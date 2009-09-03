@@ -1,0 +1,54 @@
+<html>
+        <head>
+                <meta http-equiv="Content-Type" content="application/xhtml+xml; charset=UTF-8" />
+                <title>Plurk Avatar History 噗浪頭像歷史查詢 {% block titlename %}{% endblock %}</title>
+                <meta name="description" content="Search your Plurk friends and fans avatar 搜尋您噗浪上的好友與粉絲頭像">
+        </head>
+        <style>
+                a {
+                        color:#0000CC;}
+                a:hover{
+                        color:#6666dd}
+                .sdiv {
+                        float:left;
+                        margin: 5px;
+                        padding: 4px;
+                        width:90px;
+                        text-overflow : ellipsis;
+                        overflow : hidden;}
+                .boys {
+                        border:1px #88aabb solid;}
+                .girls {
+                        border:1px #CC0000 solid;}
+                .desc {
+                        float: left;
+                        margin: 1px;
+                        padding: 1px;}
+                .top {
+                        border-top:1px #C9D7F1 solid;
+                        height:6px;}
+                .foot {clear:both;}
+                .cc {clear:both;}
+        </style>
+        <body>
+                <div class="cc">
+                        <div class="desc">
+                                Wall Mode: {% block wall %}{% endblock %}
+                        </div>
+                </div>
+                <div class="cc top"></div>
+                <div>{% block content %}{% endblock %}</div>
+                <div class="foot">{% block foot %}{% endblock %}</div>
+        </body>
+        <script type="text/javascript">
+                var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+                document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+        </script>
+        <script type="text/javascript">
+                try {
+                var pageTracker = _gat._getTracker("UA-80185-24");
+                pageTracker._trackPageview();
+                } catch(err) {}
+        </script>
+</html>
+

@@ -1,12 +1,13 @@
-{% extends "h_display.htm" %}
+{% extends "h_bgpage.htm" %}
+{% block wall %}{{ tv.bgurl }}{% endblock %}
 
 {% block titlename %}{{ tv.titlename }}{% endblock %}
 
 {% block content %}
         {% for g in gdata %}
-        <div class="sdiv">
-                <a href="/user?u={{ g.uname }}"><img border="0" src="http://avatars.plurk.com/{{ g.uid }}-big{{ g.upic}}.jpg"></a><br>
-                {{ g.uname }} / {{ g.uid }}
+        <div class="sdiv {{ tv.css }}">
+                <a href="/user?u={{ g.uname }}"><img border="0" width="90" src="http://avatars.plurk.com/{{ g.uid }}-big{{ g.upic}}.jpg"></a><br>
+                <font size="1">{{ g.uname }}</font>
         </div>
         {% endfor %}
 {% endblock %}

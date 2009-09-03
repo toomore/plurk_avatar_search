@@ -77,11 +77,12 @@ class fls(webapp.RequestHandler):
                         self.response.out.write("flush_all OK!")
                 else:
                         self.response.out.write("ERROR!!")
-class ddaa(webapp.RequestHandler):
+
+class girls(webapp.RequestHandler):
         def get(self):
                 import plurkdata
                 ddaa = plurkdata.plurkindata2
-                result = ddaa.gql("where p_gender = 0 order by p_upicnum desc")
+                result = ddaa.gql("where p_gender = 0 and p_upicnum > 50 order by p_upicnum desc")
                 gdata = []
                 for ad in result:
                         gdatax = {
@@ -90,8 +91,27 @@ class ddaa(webapp.RequestHandler):
                                         'upic' : ad.p_upicnum
                                         }
                         gdata.append(gdatax)
-                self.response.out.write(template.render( 'hh_datapage.htm' , {'gdata' : gdata}) )
-                        #ad.delete()
+                bgurl = """正妹 Girls <a href="/boys">猛男 Boys</a> | <a href="/">首頁 Home</a>"""
+                tv = {'titlename' : '正妹牆', 'css' : 'girls','bgurl' : bgurl}
+                self.response.out.write(template.render( 'hh_bgpage.htm' , {'gdata' : gdata, 'tv' : tv}) )
+
+class boys(webapp.RequestHandler):
+        def get(self):
+                import plurkdata
+                ddaa = plurkdata.plurkindata2
+                result = ddaa.gql("where p_gender = 1 and p_upicnum > 50 order by p_upicnum desc")
+                gdata = []
+                for ad in result:
+                        gdatax = {
+                                        'uname' : ad.p_uname,
+                                        'uid' : ad.p_uid,
+                                        'upic' : ad.p_upicnum
+                                        }
+                        gdata.append(gdatax)
+                bgurl = """<a href="/girls">正妹 Girls</a> 猛男 Boys | <a href="/">首頁 Home</a>"""
+                tv = {'titlename' : '猛男牆', 'css' : 'boys','bgurl' : bgurl}
+                self.response.out.write(template.render( 'hh_bgpage.htm' , {'gdata' : gdata, 'tv' : tv}) )
+
 class exif(webapp.RequestHandler):
         def get(self):
                 from django.utils import simplejson
@@ -100,6 +120,7 @@ class exif(webapp.RequestHandler):
                 pic = response.read()
                 print "!!!"
                 print pic
+
 class rss(webapp.RequestHandler):
         def get(self):
                 import feedparser
@@ -182,8 +203,9 @@ def headernote(name = None):
 application = webapp.WSGIApplication([('/user', qq),
                                                                 ('/',index),
                                                                 ('/fls',fls),
-                                                                ('/data',ddaa),
-                                                                 ('/exif',exif),
+                                                                ('/girls',girls),
+                                                                ('/boys',boys),
+                                                                ('/exif',exif),
                                                                 ('/rss',rss)
                                                                 ],
                                                                 debug=True)
