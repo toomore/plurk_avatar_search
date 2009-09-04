@@ -82,7 +82,7 @@ class fls(webapp.RequestHandler):
 class girls(webapp.RequestHandler):
         def get(self):
                 value = memcache.get("girls")
-                seconds = 300
+                seconds = 600
                 if value is None:
                         ddaa = plurkdata.plurkindata2
                         result = ddaa.gql("where p_gender = 0 and p_upicnum > 50 order by p_upicnum desc")
@@ -104,7 +104,7 @@ class girls(webapp.RequestHandler):
 class boys(webapp.RequestHandler):
         def get(self):
                 value = memcache.get("boys")
-                seconds = 300
+                seconds = 600
                 if value is None:
                         ddaa = plurkdata.plurkindata2
                         result = ddaa.gql("where p_gender = 1 and p_upicnum > 50 order by p_upicnum desc")
