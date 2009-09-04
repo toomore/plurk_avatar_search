@@ -1,5 +1,5 @@
 # This project is for Google App Engine
 # The sample sites: http://toomorechiang.appspot.com/
-#   or 1.7.5 DEMO sites: http://1-7-5.latest.toomorechiang.appspot.com/
+#   or 1.8 DEMO sites: http://1-8.latest.toomorechiang.appspot.com/
 # Project version you can check "app.yaml" and data index please check "index.yaml" if you wont to ues.
 # In "h_display.htm" , please change "google-analytics" KEY.
