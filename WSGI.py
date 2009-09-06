@@ -2,10 +2,11 @@
 #打中文
 from google.appengine.ext import webapp
 from google.appengine.api import memcache
+from google.appengine.api import users
 from google.appengine.ext.webapp import template
 from google.appengine.ext.webapp.util import run_wsgi_app
 import plurkapi_g_json as plurkapi_g
-import plurkdata
+import plurkdata,random
 
 class index(webapp.RequestHandler):
         def get(self):
@@ -85,7 +86,8 @@ class girls(webapp.RequestHandler):
                 seconds = 600
                 if value is None:
                         ddaa = plurkdata.plurkindata2
-                        result = ddaa.gql("where p_gender = 0 and p_upicnum > 50 order by p_upicnum desc")
+                        gqls = "where p_gender = 0 and p_upicnum > 50 order by %s %s" % ('p_upicnum',random.choice(['asc','desc']))
+                        result = ddaa.gql(gqls)
                         gdata = []
                         for ad in result:
                                 gdatax = {
@@ -122,6 +124,74 @@ class boys(webapp.RequestHandler):
                 bgurl = """<a href="/girls">正妹 Girls</a> 猛男 Boys | <a href="/">首頁 Home</a>"""
                 tv = {'titlename' : '猛男牆', 'css' : 'boys','bgurl' : bgurl,'seconds' : seconds}
                 self.response.out.write(template.render( 'hh_bgpage.htm' , {'gdata' : gdata, 'tv' : tv}) )
+
+class star(webapp.RequestHandler):
+        def get(self):
+                value = memcache.get("star")
+                seconds = 600
+                if value is None:
+                        ddaa = plurkdata.plurkstarindata
+                        result = ddaa.gql("order by p_uid")
+                        gdata = []
+                        for ad in result:
+                                if ad.p_upicnum == 0:
+                                        p_upicnum = ''
+                                else:
+                                        p_upicnum = ad.p_upicnum
+                                gdatax = {
+                                                'uname' : ad.p_uname,
+                                                'uid' : ad.p_uid,
+                                                'upic' : p_upicnum,
+                                                'starinfo' : ad.p_starinfo
+                                                }
+                                gdata.append(gdatax)
+                        memcache.add("star", gdata, seconds)
+                else:
+                        gdata = value
+                bgurl = """<a href="/girls">正妹 Girls</a> <a href="/boys">猛男 Boys</a> 名人 Star | <a href="/">首頁 Home</a>"""
+                refdata = 'Data from <a target="_blank" href="http://briian.com/?p=6170">Briian</a>.'
+                tv = {'titlename' : '名人牆', 'css' : 'boys','bgurl' : bgurl,'seconds' : seconds,'refdata' : refdata}
+                self.response.out.write(template.render( 'hh_bgpage2.htm' , {'gdata' : gdata, 'tv' : tv}) )
+
+class instar(webapp.RequestHandler):
+        def get(self):
+                # 1: 歌手、明星、大眾名人
+                # 2: 神的領域
+                # 3: 部落客、小眾名人
+                # 4: 政治人物
+                # 5: 電視台、電視節目、傳播媒體、媒體人
+                user = users.get_current_user()
+                if user:
+                        greeting = ("Welcome, %s! (<a href=\"%s\">sign out</a>)" % (user.nickname(), users.create_logout_url("/")))
+                        inform = """
+                                <form action="/instar" method="GET">
+                                uname <input name="uname"><br>
+                                info <input name="uinfo"><br><input type="submit"></form>
+                                """
+                        if self.request.get('uname') == '':
+                                pass
+                        else:
+                                pgg =  plurkapi_g.getplurkpic(self.request.get('uname'))
+                                try:
+                                        picsnum = int(pgg.picsnum)
+                                except:
+                                        picsnum = 0
+                                indata = plurkdata.plurkstarindata(
+                                        key_name = pgg.nickname,
+                                        p_uname = pgg.nickname,
+                                        p_uid = int(pgg.user_id),
+                                        p_upicnum = picsnum,
+                                        p_gender = int(pgg.gender),
+                                        p_startype = 5,
+                                        p_starinfo = self.request.get('uinfo')
+                                        )
+                                indata.put()
+                                self.redirect("/instar")
+                        self.response.out.write(inform)
+                else:
+                        greeting = ("<a href=\"%s\">Sign in or register</a>." % users.create_login_url("/"))
+
+                self.response.out.write("<html><body>%s<br></body></html>" % greeting)
 
 class exif(webapp.RequestHandler):
         def get(self):
@@ -216,6 +286,8 @@ application = webapp.WSGIApplication([('/user', qq),
                                                                 ('/fls',fls),
                                                                 ('/girls',girls),
                                                                 ('/boys',boys),
+                                                                ('/star',star),
+                                                                ('/instar',instar),
                                                                 ('/exif',exif),
                                                                 ('/rss',rss)
                                                                 ],
