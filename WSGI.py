@@ -83,7 +83,7 @@ class fls(webapp.RequestHandler):
 class girls(webapp.RequestHandler):
         def get(self):
                 value = memcache.get("girls")
-                seconds = 600
+                seconds = 1800
                 if value is None:
                         ddaa = plurkdata.plurkindata2
                         gqls = "where p_gender = 0 and p_upicnum > 50 order by %s %s" % ('p_upicnum',random.choice(['asc','desc']))
@@ -99,14 +99,14 @@ class girls(webapp.RequestHandler):
                         memcache.add("girls", gdata, seconds)
                 else:
                         gdata = value
-                bgurl = """正妹 Girls <a href="/boys">猛男 Boys</a> | <a href="/">首頁 Home</a>"""
+                bgurl = """正妹 Girls <a href="/boys">猛男 Boys</a> <a href="/star">名人 Star</a> | <a href="/">首頁 Home</a>"""
                 tv = {'titlename' : '正妹牆', 'css' : 'girls','bgurl' : bgurl,'seconds' : seconds}
                 self.response.out.write(template.render( 'hh_bgpage.htm' , {'gdata' : gdata, 'tv' : tv}) )
 
 class boys(webapp.RequestHandler):
         def get(self):
                 value = memcache.get("boys")
-                seconds = 600
+                seconds = 1800
                 if value is None:
                         ddaa = plurkdata.plurkindata2
                         result = ddaa.gql("where p_gender = 1 and p_upicnum > 50 order by p_upicnum desc")
@@ -121,14 +121,14 @@ class boys(webapp.RequestHandler):
                         memcache.add("boys", gdata, seconds)
                 else:
                         gdata = value
-                bgurl = """<a href="/girls">正妹 Girls</a> 猛男 Boys | <a href="/">首頁 Home</a>"""
+                bgurl = """<a href="/girls">正妹 Girls</a> 猛男 Boys <a href="/star">名人 Star</a> | <a href="/">首頁 Home</a>"""
                 tv = {'titlename' : '猛男牆', 'css' : 'boys','bgurl' : bgurl,'seconds' : seconds}
                 self.response.out.write(template.render( 'hh_bgpage.htm' , {'gdata' : gdata, 'tv' : tv}) )
 
 class star(webapp.RequestHandler):
         def get(self):
                 value = memcache.get("star")
-                seconds = 600
+                seconds = 3600
                 if value is None:
                         ddaa = plurkdata.plurkstarindata
                         result = ddaa.gql("order by p_uid")
@@ -148,8 +148,8 @@ class star(webapp.RequestHandler):
                         memcache.add("star", gdata, seconds)
                 else:
                         gdata = value
-                bgurl = """<a href="/girls">正妹 Girls</a> <a href="/boys">猛男 Boys</a> 名人 Star | <a href="/">首頁 Home</a>"""
-                refdata = 'Data from <a target="_blank" href="http://briian.com/?p=6170">Briian</a>.'
+                bgurl = """<a href="/girls">正妹 Girls</a> <a href="/boys">猛男 Boys</a> 名人牆 Star | <a href="/">首頁 Home</a>"""
+                refdata = '<b>Data from <a target="_blank" href="http://briian.com/?p=6170">Briian</a>.</b>'
                 tv = {'titlename' : '名人牆', 'css' : 'boys','bgurl' : bgurl,'seconds' : seconds,'refdata' : refdata}
                 self.response.out.write(template.render( 'hh_bgpage2.htm' , {'gdata' : gdata, 'tv' : tv}) )
 
@@ -185,7 +185,7 @@ class instar(webapp.RequestHandler):
                                         p_startype = 5,
                                         p_starinfo = self.request.get('uinfo')
                                         )
-                                indata.put()
+                                #indata.put()
                                 self.redirect("/instar")
                         self.response.out.write(inform)
                 else:
