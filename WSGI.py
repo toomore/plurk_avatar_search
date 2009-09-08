@@ -13,6 +13,11 @@ class index(webapp.RequestHandler):
                 tv = {'nickname' : self.request.get('u')}
                 self.response.out.write(template.render( 'h_index.htm',{'tv' : tv}) )
 
+class end(webapp.RequestHandler):
+        def get(self):
+                a = random.choice(['h_end.htm' ,'h_end2.htm' , 'h_end3.htm'])
+                self.response.out.write(template.render(a,{}))
+
 class qq(webapp.RequestHandler):
        def get(self):
                 try:
@@ -281,15 +286,16 @@ def headernote(name = None):
         return name
 
 
-application = webapp.WSGIApplication([('/user', qq),
-                                                                ('/',index),
-                                                                ('/fls',fls),
-                                                                ('/girls',girls),
-                                                                ('/boys',boys),
-                                                                ('/star',star),
-                                                                ('/instar',instar),
-                                                                ('/exif',exif),
-                                                                ('/rss',rss)
+application = webapp.WSGIApplication([('/user', end),
+                                                                ('/',end),
+                                                                ('/fls',end),
+                                                                ('/girls',end),
+                                                                ('/boys',end),
+                                                                ('/star',end),
+                                                                ('/instar',end),
+                                                                ('/exif',end),
+                                                                ('/rss',end),
+                                                                ('/end',end)
                                                                 ],
                                                                 debug=True)
 

@@ -23,6 +23,9 @@
                 .top {
                         border-top:1px #C9D7F1 solid;
                         height:6px;}
+                .tip{
+                        background:#cc0000;
+                        color:#55ffaa}
                 .sdiv {
                         float:left;
                         margin: 5px;
@@ -41,6 +44,7 @@
                         </div>
                 </div>
                 <div class="cc top"></div>
+                {% include "h_tip.htm" %}
                 <div class="descr">
                         <form action="/user" method="get">
                                 <input name="u" value="{{ tv.nickname }}"> <input type="submit" value="Plurk Picture!">
