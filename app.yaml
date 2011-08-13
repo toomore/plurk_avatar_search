@@ -10,3 +10,6 @@ handlers:
   mime_type: image/x-icon
 - url: .*
   script: WSGI.py
+
+error_handlers:
+- file: error.htm
